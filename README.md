@@ -1,5 +1,23 @@
 # Proyecto: Puente de una vía
 
+## Instrucciones
+
+1. Clonar el repositorio
+> git clone git@github.com:joselynmirror/Bridge.git
+2. En otra terminal entrar a la carpeta /server
+> cd ./server
+3. Instalar las dependencias
+> yarn install
+4. Iniciar el servidor
+> yarn start
+5. En una terminal entrar a la carpeta /dashboard
+> cd ./dashboard
+6. Instalar las dependencias
+> yarn install
+7. Iniciar el panel de control
+> yarn start
+8. Abrir en un navegador el localhost:3000 e interactuar con la UI añadiendo clientes
+
 ## Enlaces de interés:
 
 ## Diseño
