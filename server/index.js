@@ -2,66 +2,83 @@ const express = require("express");
 const http = require("http");
 const WebSocket = require("ws");
 const { v4: uuidv4 } = require("uuid");
-const cors = require("cors");
 
 const app = express();
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ noServer: true });
+const wss = new WebSocket.Server({ server });
 
-app.use(cors());
+let carsOnBridge = new Set();
+const maxCarsOnBridge = 3;
 
-let clients = {};
+wss.on("connection", (ws) => {
+  const clientData = {
+    id: uuidv4(),
 
-wss.on("connection", (ws, request, clientId) => {
-  console.log(`Nuevo cliente conectado con ID: ${clientId}`);
-  clients[clientId] = ws;
+    velocity: Math.floor(Math.random() * 10) + 5,
+    currentProgress: 0,
+    color:
+      "#" + (((1 << 24) * Math.random()) | 0).toString(16).padStart(6, "0"),
+    running: false,
+
+    delay: Math.floor(Math.random() * 2000) + 1000,
+    currentDelay: null,
+    count: 0,
+  };
+  clientData.currentDelay = clientData.delay;
+  ws.clientData = clientData;
+
+  console.log(`Nuevo cliente conectado con ID: ${clientData.id}`);
 
   ws.on("message", (message) => {
-    console.log(`Mensaje recibido de ${clientId}: ${message}`);
+    const { command, data } = JSON.parse(message);
+
+    if (command === "Generar carro") {
+      ws.send(JSON.stringify(clientData));
+    }
+
+    if (command === "Preguntar si puedo pasar") {
+      data.currentDelay =
+        data.currentDelay > 0 ? data.currentDelay - 1 : data.currentDelay;
+
+      if (
+        carsOnBridge.size < maxCarsOnBridge &&
+        !carsOnBridge.has(data.id) &&
+        data.currentDelay <= 0
+      ) {
+        data.currentDelay = data.delay;
+        ws.send(JSON.stringify({ ...data, running: true }));
+        carsOnBridge.add(data.id);
+        return;
+      }
+
+      if (carsOnBridge.has(data.id)) {
+        const currentProgress = data.currentProgress + data.velocity / 100;
+        const running = currentProgress <= 100;
+        if (!running) {
+          data.count += 1;
+          carsOnBridge.delete(data.id);
+        }
+
+        ws.send(
+          JSON.stringify({
+            ...data,
+            currentProgress: running ? currentProgress : 0,
+            running,
+          })
+        );
+        return;
+      }
+
+      ws.send(JSON.stringify(data));
+    }
   });
 
   ws.on("close", () => {
-    console.log(`Cliente desconectado con ID: ${clientId}`);
-    delete clients[clientId];
+    console.log(`Cliente desconectado con ID: ${clientData.id}`);
   });
 });
 
-// Ruta HTTP para crear una nueva conexión WebSocket
-app.get("/connect", (req, res) => {
-  const clientId = uuidv4();
-  const ws = new WebSocket(`ws://localhost:3000/${clientId}`);
-
-  ws.on("open", () => {
-    console.log(`WebSocket abierto para cliente ${clientId}`);
-  });
-
-  clients[clientId] = ws;
-
-  res.json({ clientId });
-});
-
-// Emitir mensajes continuamente a todos los clientes conectados
-setInterval(() => {
-  const message = JSON.stringify({ data: "Mensaje continuo" });
-  for (const clientId in clients) {
-    const client = clients[clientId];
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(message);
-    }
-  }
-}, 1000); // Emitir un mensaje cada segundo
-
-server.on("upgrade", (request, socket, head) => {
-  const pathname = request.url.split("/")[1];
-  if (clients[pathname]) {
-    wss.handleUpgrade(request, socket, head, (ws) => {
-      wss.emit("connection", ws, request, pathname);
-    });
-  } else {
-    socket.destroy();
-  }
-});
-
-server.listen(3001, () => {
-  console.log("Servidor escuchando en http://localhost:3000");
+const PORT = 9001;
+server.listen(PORT, () => {
+  console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
