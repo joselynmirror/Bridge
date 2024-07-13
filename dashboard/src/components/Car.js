@@ -73,7 +73,6 @@ export const Car = ({ index }) => {
           </div>
           <div>Velocidad: {data.velocity}</div>
           <div>Tiempo de espera: {data.currentDelay}</div>
-          <div>Dirección: {data.direction}</div>
           <div>Numero de veces que cruza el puente: {data.count}</div>
         </div>
       </Tooltip>
