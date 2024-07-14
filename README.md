@@ -23,6 +23,7 @@
 ## Diseño
 
 *Diagrama de casos de uso:* https://drive.google.com/file/d/16lxzFqCgCCkwST8-deheIhf8WgMaTwRw/view?usp=sharing
+
 *Diagrama de interación:*
 
 **Arquitectura y Protocolos**
@@ -38,14 +39,6 @@
 ## Ejecución
 
 *Video en youtube*: https://youtu.be/ytFrJ3Hb2HU
-
-## Instrucciones para la ejecución del proyecto
-
--
-
-## Video de presentación
-
-[![Video](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=SVRLi5T7MXw)
 
 ## Integrantes
 
