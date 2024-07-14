@@ -37,7 +37,7 @@
 
 ## Ejecución
 
-*Video en youtube*: 
+*Video en youtube*: https://youtu.be/ytFrJ3Hb2HU
 
 ## Instrucciones para la ejecución del proyecto
 
