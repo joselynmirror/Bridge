@@ -36,10 +36,13 @@
 
 *caso 5:* https://drive.google.com/file/d/1L1fGaSt5wuTD0YWvRGfFVErrDUHG_MTP/view?usp=sharing
 
+
 **Arquitectura y Protocolos**
 
 *Arquitectura:* Cliente-Servidor
+
 *Protocolo de transporte:* TCP/IP
+
 *Protocolo de aplicación:* Custom protocol using JSON messages
 
 ## Explicación 
