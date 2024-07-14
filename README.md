@@ -25,6 +25,11 @@
 *Diagrama de casos de uso:* https://drive.google.com/file/d/16lxzFqCgCCkwST8-deheIhf8WgMaTwRw/view?usp=sharing
 
 *Diagrama de interación:*
+caso 1: https://drive.google.com/file/d/1n9JFVphIzRUdEhoFsuVGfKMoS8D2Y0RY/view?usp=sharing
+caso 2: https://drive.google.com/file/d/1SA9Vb0zb_0VHY1N70Y5zOvZpE61TjuhZ/view?usp=sharing
+caso 3: https://drive.google.com/file/d/1Z8deNczPY1uT0WpDApjUL1ytZ9T7Rufi/view?usp=sharing
+caso 4: https://drive.google.com/file/d/1wYOzQXKbEP-y5LmlMYT_KTBMi2TFAfWd/view?usp=sharing
+caso 5: https://drive.google.com/file/d/1L1fGaSt5wuTD0YWvRGfFVErrDUHG_MTP/view?usp=sharing
 
 **Arquitectura y Protocolos**
 
